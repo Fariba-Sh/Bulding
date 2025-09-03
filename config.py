@@ -1,0 +1,4 @@
+SECRET_KEY = "DLOHNCFDSHCHSDGBHSVHJubguishhcsbvgfyusggT!@@!@@55565656r56454r"
+
+
+SQLALCHEMY_DATABASE_URI = "sqlite:///Building1.db"

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+ <title>پنل کاربری</title>
+{% endblock %}
+
+{% block body %}
+
+
+
+    <section class="simple-box" style="max-width: 376px;">
+        <h1>ویرایش اطلاعات</h1>
+
+
+    <form action="#" method="post" >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" name="username" value="{{current_user.username}}" placeholder="نام کاربری">
+        <input type="password" name="password" placeholder="  رمز عبور جدید" >
+        <input type="number" name="phone" value="{{current_user.phone}}" placeholder="شماره تلفن">
+        <textarea name="address" placeholder="آدرس دقیق">{{current_user.address}}</textarea>
+        <input type="submit" value="ثبت تغییرات ">
+    </form>
+    </section>
+
+    <div style="text-align: center; margin-top: 5px;">
+        <a href="/user/logout" class="red-btn">خروج از حساب کاربری</a>
+    </div>
+        
+{% endblock %}
+

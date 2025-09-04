@@ -75,3 +75,13 @@ def user_dashboard():
         db.session.commit()
 
         return redirect(url_for('user.user_dashboard'))
+    
+
+
+@app.route('/user/logout', methods = ['GET'])
+@login_required
+def logout():
+    logout_user()
+    flash('با موفقیت خارج شدید')
+    return redirect('/')
+

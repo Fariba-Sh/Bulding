@@ -1,6 +1,9 @@
 from flask import Blueprint,flash ,redirect,url_for, render_template,session,abort,request
 import config
 from flask_login import logout_user , login_required
+from passlib.hash import sha256_crypt
+from models.user import User
+from extentions import db 
 
 
 app = Blueprint("admin" , __name__)
@@ -14,7 +17,7 @@ def before_request():
 
 
 
-@app.route('/admin/login' , methods = ["POST" , "GET"])
+@app.route('/admin/login', methods = ["POST" , "GET"])
 def admin_login():
     if request.method == "POST":
         username = request.form.get("username", None)
@@ -36,4 +39,25 @@ def admin_login():
 def admin_dashboard():
     return render_template("admin/dashboard.html")
 
+
+
+@app.route("/admin/add_user", methods = ["POST" , "GET"])
+def add_user():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        phone = request.form.get("phone")
+        address = request.form.get("address")
+
+        user = User.query.filter_by(username = username).first()
+        if user:
+            flash("نام کاربری از قبل وجود دارد")
+            return redirect(url_for("admin.add_user"))
+        
+        new_user = User(username = username , password = sha256_crypt.encrypt(password),phone = phone , address = address)
+        db.session.add(new_user)
+        db.session.commit()
+        flash("کاربر جدید با موفقیت اضافه شد")
+        return redirect(url_for("admin.admin_dashboard"))
+    return render_template("admin/add_user.html")
 

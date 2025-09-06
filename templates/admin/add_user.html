@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+ <title>اضافه کردن کاربران</title>
+{% endblock %}
+
+{% block body %}
+
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <label>نام کاربری : </label>
+        <input type="text" name="username" required><br>
+        <label>رمز عبور : </label>
+        <input type="password" name="password" required><br>
+        <label>شماره تماس : </label>
+        <input type="tel" name="phone" required><br>
+        <label>آدرس : </label>
+        <input type="text" name="address" required><br>
+        <button type="submit">ثبت کاربر جدید</button>
+    </form>
+
+{% endblock %}
+

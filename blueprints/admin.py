@@ -1,5 +1,6 @@
-from flask import Blueprint ,redirect,url_for, render_template,session,abort,request
+from flask import Blueprint,flash ,redirect,url_for, render_template,session,abort,request
 import config
+from flask_login import logout_user , login_required
 
 
 app = Blueprint("admin" , __name__)
@@ -34,3 +35,5 @@ def admin_login():
 @app.route('/admin/dashboard' , methods = ["GET"])
 def admin_dashboard():
     return render_template("admin/dashboard.html")
+
+

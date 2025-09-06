@@ -32,7 +32,7 @@ def load_user(user_id):
 @login_manager.unauthorized_handler
 def unauthorized():
     flash('وارد حساب کاربریتان شوید')
-    return redirect(url_for('user.login'))
+    return redirect(url_for('user.user_login'))
 
 db.init_app(app)
 with app.app_context():

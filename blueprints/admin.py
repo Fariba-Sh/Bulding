@@ -3,6 +3,7 @@ import config
 from flask_login import logout_user , login_required
 from passlib.hash import sha256_crypt
 from models.user import User
+from models.charge import Charge
 from extentions import db 
 
 
@@ -60,4 +61,15 @@ def add_user():
         flash("کاربر جدید با موفقیت اضافه شد")
         return redirect(url_for("admin.admin_dashboard"))
     return render_template("admin/add_user.html")
+
+
+@app.route("/admin/add_monthly_charge", methods = ["POST","GET"])
+def add_monthly_charge():
+    users = User.query.all()
+    for u in users:
+        new_charge = Charge(user_id = u.id,amount = 5000000)
+        db.session.add(new_charge)
+    db.session.commit()
+    flash("شارژ ماهانه برای همه ی اعضا ثبت شد")
+    return redirect(url_for("admin.admin_dashboard"))
 

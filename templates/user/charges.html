@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+ <title>شارژ ها</title>
+{% endblock %}
+
+{% block body %}
+    <h2>لیست شارژهای شما</h2>
+    <table border="1">
+        <tr>
+            <th>تاریخ</th>
+            <th>مبلغ</th>
+            <th>وضعیت</th>
+            <th>عملیات</th>
+        </tr>
+        {% for c in charges %}
+        <tr>
+            <td>{{ c.due_date }}</td>
+            <td>{{ c.amount }} تومان</td>
+            <td>{{ "پرداخت شده" if c.status == "paid" else "بدهکار" }}</td>
+            <td>{% if c.status == "unpaid" %}
+                <form method="post" action="{{ url_for('user.pay_charge' , charge_id = c.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button type="submit">پرداخت</button>
+                </form>
+                {% else %}
+                ---
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}
+

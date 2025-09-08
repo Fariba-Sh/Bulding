@@ -1,6 +1,7 @@
 from flask import Blueprint , render_template , request ,redirect,url_for , flash
 from flask_login import login_user,login_required,current_user, logout_user,login_manager
 from models.user import *
+from models.charge import Charge
 from extentions import db
 from passlib.hash import sha256_crypt
 
@@ -66,3 +67,27 @@ def logout():
     flash('با موفقیت خارج شدید')
     return redirect('/')
 
+
+
+@app.route('/user/charges', methods = ['GET'])
+@login_required
+def user_charges():
+   charges = current_user.charges
+   return render_template("user/charges.html" , charges = charges)
+
+
+
+@app.route('/user/pay/<int:charge_id>', methods = ['POST'])
+@login_required
+def pay_charge(charge_id):
+    charge = Charge.query.filter_by(id =charge_id , user_id = current_user.id).first()
+    if not charge:
+        flash("این شارژ پیدا نشد")
+        return redirect(url_for("user.user_charges"))
+    if charge.status == "paid":
+        flash("این شارژ قبلا پرداخت شده")
+    else:
+        charge.status = "paid"
+        db.session.commit()
+        flash("پرداخت با موفقیت انجام شد")
+    return redirect(url_for('user.user_charges'))

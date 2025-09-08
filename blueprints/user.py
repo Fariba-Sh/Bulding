@@ -4,6 +4,8 @@ from models.user import *
 from models.charge import Charge
 from extentions import db
 from passlib.hash import sha256_crypt
+from config import *
+import requests
 
 app = Blueprint("user" , __name__)
 
@@ -86,8 +88,49 @@ def pay_charge(charge_id):
         return redirect(url_for("user.user_charges"))
     if charge.status == "paid":
         flash("این شارژ قبلا پرداخت شده")
+        return redirect(url_for('user.user_charges'))
+    
+    req_data = {"merchant_id":ZARINPAL_MERCHANT_ID , "amount":charge.amount , "callback_url":ZARINPAL_CALLBACK_URL,
+                "description": f"پرداخت شارژ ماهانه ی کاربر {current_user.username}",}
+    response = requests.post(ZARINPAL_REQUEST_URL, json = req_data)
+    data = response.json()
+
+    print("Zarinpal Response:" , data)
+
+    if 'data' in data and data["data"].get('code') == 100:
+        authority = data["data"]["authority"]
+        return redirect(ZARINPAL_STARTPAY_URL.format(authority = authority))
     else:
+        flash("خطا در اتصال به درگاه پرداخت")
+        return redirect(url_for("user.user_charges"))
+    
+
+
+@app.route("/user/payment/verify")
+@login_required
+def payment_verify():
+    authority = request.args.get("Authority")
+    status = request.args.get("Status")
+
+    if status !="OK":
+        flash("پرداخت ناموفق بود")
+        return redirect(url_for("user.user_charges"))
+    
+    charge =  Charge.query.filter_by(user_id = current_user.id , status = "unpaid").first()
+    req_data = {"merchant_id": ZARINPAL_MERCHANT_ID , "amount": charge.amount , "authority" : authority,}
+    response = requests.post(ZARINPAL_VERIFY_URL , json=req_data)
+    data = response.json()
+
+    print("verify response:" , data)
+
+    if 'data' in data and data['data'].get('code') == 100:
         charge.status = "paid"
         db.session.commit()
         flash("پرداخت با موفقیت انجام شد")
-    return redirect(url_for('user.user_charges'))
+    else:
+        flash("پرداخت ناموفق بود")
+    return redirect(url_for("user.user_charges"))
+
+
+
+

@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/eggy.css')}}" />
+    <!-- Progressbar Styles -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/Progressbar.css')}}" />
+    <!-- Themes -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/theme.css')}}" />
+
+
     <link rel="stylesheet" href="{{url_for('static', filename = 'css/index.css')}}">
     {% block header %}
     {% endblock %}
@@ -11,5 +18,20 @@
 <body>
     {% block body %}
     {% endblock %}
+    </script>
+    <!-- پیام فلش برای چند لحظه -->
+    <script type="module">
+         import { Eggy } from '{{url_for('static', filename = 'js/eggy.js')}}';
+        {% for m in get_flashed_messages() %}
+            Eggy({
+                title:  'اینجا رو ببین',
+                message:  '{{ m }}',
+                type: 'info',
+                duration: 5000,
+            });
+        {% endfor %}
+
+
+    </script>
 </body>
 </html>

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+ <title>لیست پرداخت ها</title>
+{% endblock %}
+
+{% block body %}
+<h2>لیست پرداخت ها</h2>
+<table border="1" cellpadding = "8" cellspacing = '0'>
+    <thead>
+        <tr>
+            <th>کاربر</th>
+            <th>مبلغ</th>
+            <th>وضعیت</th>
+            <th>تاریخ</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for charge, user in charges %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ charge.amount }} تومان</td>
+            <td>{% if charge.status == "paid" %} پرداخت شده {% else %} پرداخت نشده {% endif %}</td>
+            <td>{{ charge.due_date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}
+

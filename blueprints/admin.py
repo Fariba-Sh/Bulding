@@ -73,3 +73,10 @@ def add_monthly_charge():
     flash("شارژ ماهانه برای همه ی اعضا ثبت شد")
     return redirect(url_for("admin.admin_dashboard"))
 
+
+
+
+@app.route("/admin/charges")
+def admin_charges():
+    charges = db.session.query(Charge , User).join(User,User.id == Charge.user_id).all()
+    return render_template("admin/charges.html" , charges = charges)

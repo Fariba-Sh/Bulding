@@ -16,7 +16,7 @@
         {% for c in charges %}
         <tr>
             <td>{{ c.due_date }}</td>
-            <td>{{ c.amount }} تومان</td>
+            <td>{{ c.amount | currency }} </td>
             <td>{{ "پرداخت شده" if c.status == "paid" else "بدهکار" }}</td>
             <td>{% if c.status == "unpaid" %}
                 <form method="post" action="{{ url_for('user.pay_charge' , charge_id = c.id) }}">

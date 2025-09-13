@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<title>ویرایش کاربر</title>
+{% endblock %}
+
+{% block body %}
+
+<h2>ویرایش کاربر {{ user.username }}</h2>
+
+<form method="POST" action="{{ url_for('admin.edit_user', user_id=user.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+    <label>نام کاربری:</label><br>
+    <input type="text" name="username" value="{{ user.username }}" required><br><br>
+
+    <label>شماره تماس:</label><br>
+    <input type="text" name="phone" value="{{ user.phone }}"><br><br>
+
+    <label>آدرس:</label><br>
+    <textarea name="address" rows="3">{{ user.address }}</textarea><br><br>
+
+    <label>رمز عبور (در صورت تغییر، وارد کنید):</label><br>
+    <input type="password" name="password" placeholder="رمز عبور جدید"><br><br>
+
+    <button type="submit">ذخیره تغییرات</button>
+</form>
+
+<a href="{{ url_for('admin.admin_users') }}">بازگشت به لیست کاربران</a>
+
+{% endblock %}

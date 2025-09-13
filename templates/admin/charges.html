@@ -2,11 +2,31 @@
 
 {% block header %}
  <title>لیست پرداخت ها</title>
+ <style>
+    .paid {
+        background-color: #d4edda; /* سبز روشن */
+    }
+    .unpaid {
+        background-color: #f8d7da; /* قرمز روشن */
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+ </style>
 {% endblock %}
 
 {% block body %}
 <h2>لیست پرداخت ها</h2>
-<table border="1" cellpadding = "8" cellspacing = '0'>
+<table>
     <thead>
         <tr>
             <th>کاربر</th>
@@ -17,15 +37,13 @@
     </thead>
     <tbody>
         {% for charge, user in charges %}
-        <tr>
+        <tr class="{{ 'paid' if charge.status == 'paid' else 'unpaid' }}">
             <td>{{ user.username }}</td>
-            <td>{{ charge.amount }} تومان</td>
+            <td>{{ charge.amount | currency }}</td>
             <td>{% if charge.status == "paid" %} پرداخت شده {% else %} پرداخت نشده {% endif %}</td>
-            <td>{{ charge.due_date}}</td>
+            <td>{{ charge.due_date | to_jalali }}</td>
         </tr>
         {% endfor %}
     </tbody>
-
 </table>
 {% endblock %}
-

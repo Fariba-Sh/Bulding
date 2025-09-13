@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <title>شارژ ماهانه</title>
+{% endblock %}
+
+{% block body %}
+    <form method="POST" action="{{ url_for('admin.add_monthly_charge') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        
+        <label>مبلغ شارژ ماهانه (ریال):</label>
+        <input type="number" name="amount" id="amount" required oninput="formatAmount()" />
+        
+        <p id="formattedAmount" style="margin-top: 10px; font-weight: bold;"></p>
+        
+        <button type="submit">ثبت شارژ برای همه کاربران</button>
+    </form>
+
+    <script>
+        function formatAmount() {
+            const amountInput = document.getElementById("amount");
+            const formattedDisplay = document.getElementById("formattedAmount");
+
+            const value = parseInt(amountInput.value.replaceAll(",", ""));
+            if (!isNaN(value)) {
+                const formatted = value.toLocaleString('fa-IR') + " ریال";
+                formattedDisplay.textContent = "مبلغ: " + formatted;
+            } else {
+                formattedDisplay.textContent = "";
+            }
+        }
+    </script>
+{% endblock %}

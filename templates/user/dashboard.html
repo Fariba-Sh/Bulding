@@ -6,26 +6,27 @@
 
 {% block body %}
 
+    <h2>اطلاعات حساب کاربری</h2>
 
-
-    <section class="simple-box" style="max-width: 376px;">
-        <h1>ویرایش اطلاعات</h1>
-
-
-    <form action="#" method="post" >
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <input type="text" name="username" value="{{current_user.username}}" placeholder="نام کاربری">
-        <input type="password" name="password" placeholder="  رمز عبور جدید" >
-        <input type="number" name="phone" value="{{current_user.phone}}" placeholder="شماره تلفن">
-        <textarea name="address" placeholder="آدرس دقیق">{{current_user.address}}</textarea>
-        <input type="submit" value="ثبت تغییرات ">
-    </form>
-    </section>
+    <table border="1" style="margin-bottom: 20px;">
+        <tr>
+            <th>نام کاربری</th>
+            <td>{{ current_user.username }}</td>
+        </tr>
+        <tr>
+            <th>شماره تلفن</th>
+            <td>{{ current_user.phone }}</td>
+        </tr>
+        <tr>
+            <th>آدرس</th>
+            <td>{{ current_user.address }}</td>
+        </tr>
+    </table>
 
     <div style="text-align: center; margin-top: 5px;">
         <a href="/user/logout" class="red-btn">خروج از حساب کاربری</a>
     </div>
         
     <a href="/user/charges">شارژ خود را پرداخت کنید</a>
-{% endblock %}
 
+{% endblock %}

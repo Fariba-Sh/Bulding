@@ -32,34 +32,11 @@ def user_login():
             return redirect(url_for('user.user_login'))
         
 
-@app.route("/user/dashboard" , methods = ["GET" , "POST"])
+@app.route("/user/dashboard", methods=["GET"])
 @login_required
 def user_dashboard():
-    if request.method == "GET":
-        return render_template('user/dashboard.html')
-    else:
-        username = request.form.get('username',None)
-        password = request.form.get('password', None)
-        phone = request.form.get('phone', None)
-        address = request.form.get('address', None)
+    return render_template('user/dashboard.html')
 
-        if current_user.username != username:
-            user = User.query.filter(User.username == username).first()
-            if user != None:
-                flash('نام کاربری از قبل انتخاب شده است')
-                return redirect(url_for('user.user_login'))
-            else:
-                current_user.username = username
-        if password != None:
-            current_user.password = sha256_crypt.encrypt(password)
-
-        current_user.address = address
-        current_user.phone = phone
-       
-        db.session.commit()
-
-        return redirect(url_for('user.user_dashboard'))
-    
 
 
 @app.route('/user/logout', methods = ['GET'])

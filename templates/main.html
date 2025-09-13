@@ -2,10 +2,50 @@
 
 {% block header %}
 <title>صفحه اصلی برج مسکونی</title>
+<style>
+        .paid {
+            background-color: #d4edda;
+        }
+        .unpaid {
+            background-color: #f8d7da;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
 {% include 'parts/header.html'%}
 
 <h2>برج مسکونی نیکان</h2>
+<h2>وضعیت پرداخت کاربران در {{ now | jalali_month }}</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>نام کاربر</th>
+            <th>واحد / آدرس</th>
+            <th>وضعیت پرداخت</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in user_statuses %}
+        <tr class="{{ 'paid' if user.status == 'پرداخت شده' else 'unpaid' }}">
+            <td>{{ user.username }}</td>
+            <td>{{ user.address }}</td>
+            <td>{{ user.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

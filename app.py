@@ -34,6 +34,38 @@ def unauthorized():
     flash('وارد حساب کاربریتان شوید')
     return redirect(url_for('user.user_login'))
 
+@app.template_filter('currency')
+def currency_format(value):
+    try:
+        value = int(value)
+        return f"{value:,}".replace(",", "٬") + " ریال"  # ممیز فارسی
+    except (ValueError, TypeError):
+        return str(value) + " ریال"
+
+
+import jdatetime
+
+@app.template_filter('to_jalali')
+def to_jalali(date):
+    if not date:
+        return ''
+    # تبدیل تاریخ میلادی به شمسی
+    return jdatetime.date.fromgregorian(date=date).strftime('%Y/%m/%d')
+
+
+
+@app.template_filter('jalali_month')
+def jalali_month(date):
+    if not date:
+        return ''
+    j_date = jdatetime.date.fromgregorian(date=date)
+    months = [
+        "فروردین", "اردیبهشت", "خرداد", "تیر",
+        "مرداد", "شهریور", "مهر", "آبان",
+        "آذر", "دی", "بهمن", "اسفند"
+    ]
+    return months[j_date.month - 1]
+
 db.init_app(app)
 with app.app_context():
     db.create_all() 

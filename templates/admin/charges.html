@@ -25,6 +25,8 @@
 {% endblock %}
 
 {% block body %}
+{% include 'parts/header.html'%}
+<section class="simple-box">
 <h2>لیست پرداخت ها</h2>
 <table>
     <thead>
@@ -46,4 +48,7 @@
         {% endfor %}
     </tbody>
 </table>
+<a href="{{ url_for('admin.admin_dashboard') }}">بازگشت به پنل ادمین </a>
+
+</section>
 {% endblock %}

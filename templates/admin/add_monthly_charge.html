@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+{% include 'parts/header.html'%}
+<section class="simple-box">
     <form method="POST" action="{{ url_for('admin.add_monthly_charge') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         
@@ -15,6 +17,9 @@
         
         <button type="submit">ثبت شارژ برای همه کاربران</button>
     </form>
+    <a href="{{ url_for('admin.admin_dashboard') }}">بازگشت به پنل ادمین </a>
+
+</section>
 
     <script>
         function formatAmount() {

@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+{% include 'parts/header.html'%}
+<section class="simple-box">
     <h2>لیست شارژهای شما</h2>
     <table border="1">
         <tr>
@@ -30,6 +32,9 @@
         </tr>
         {% endfor %}
     </table>
+    <a href="{{ url_for('user.user_dashboard') }}">بازگشت به پنل کاربری </a>
+
+    </section>
 
 
 {% endblock %}

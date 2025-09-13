@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+{% include 'parts/header.html'%}
+<section class="simple-box">
 
 <h2>ویرایش کاربر {{ user.username }}</h2>
 
@@ -27,5 +29,5 @@
 </form>
 
 <a href="{{ url_for('admin.admin_users') }}">بازگشت به لیست کاربران</a>
-
+</section>
 {% endblock %}

@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    
-    <section class="simple-box" style="max-width: 290px; ;">
+    {% include 'parts/header.html'%}
+    <section class="simple-box">
         
-    <div id="login-box">
+
         <h2>ورود</h2>
     <form action="#" method="post">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -16,7 +16,7 @@
         <input type="password" name="password" placeholder="رمز عبور" required>
         <input id="login-btn" type="submit" value="ورود">
     </form>
-    </div>
+    
 
     
     </section>

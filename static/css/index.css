@@ -5,23 +5,27 @@
 body{
    margin: 0;
    padding: 0;
+   background-image: url("/static/images/main.webp");
    
 }
 
 .header-wrapper{
     
-    border-bottom: 2px solid rgb(141, 121, 9);
+    border: 2px solid rgb(141, 121, 9);
+    background-color: aliceblue;
+    max-width: 800px;
+    margin: auto;
+    border-radius: 15px;
 }
 
 .header-links{
-margin: 10px;
-    padding: 10px;
+    padding: 20px;
     text-align: center;
 }
 
 .header-links a{
     text-decoration: none;
-    color: rgb(96, 95, 95);
+    color: rgb(0, 0, 0);
     margin: 10px;
     text-align: center;
     padding: 10px;
@@ -36,11 +40,16 @@ margin: 10px;
 .simple-box{
     border: 1px solid rgb(152, 117, 28);
     padding: 10px;
-    text-align: center;
-    width: 600px;
+    margin-right: 10px;
+    max-width: 500px;
     margin: auto;
     border-radius: 10px;
     margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: rgb(243, 246, 246);
+    text-align: center;
 }
 
 #login-box input{
@@ -59,3 +68,29 @@ margin: 10px;
 #login-btn:hover{
     cursor: pointer;
 }
+
+
+.simple-box a {
+    text-decoration: none;
+    color: rgb(96, 95, 95);
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+}
+
+.simple-box a:hover{
+        background-color: rgb(171, 170, 170);
+    color: aliceblue;
+    border-radius: 20px;
+    margin: 5px;
+}
+
+.simple-box  input ,textarea{
+    border-radius: 10px;
+    padding: 10px;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    display: block;
+}
+
